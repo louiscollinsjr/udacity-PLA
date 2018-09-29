@@ -19,7 +19,7 @@ def test_connection():
 def popular_articles():
     db = psycopg2.connect(database=DBNAME)
     curr = db.cursor()
-    curr.execute(""""Select articles.title, count(articles.slug) AS COUNT
+    curr.execute("""Select articles.title, count(articles.slug) AS COUNT
                        FROM articles INNER JOIN log
                          ON articles.slug like split_part(log.path,\'/\',3)
                    GROUP BY articles.title
@@ -57,8 +57,7 @@ def requesrt_errors():
     db = psycopg2.connect(database=DBNAME)
     curr = db.cursor()
     curr.execute("""SELECT total_count.date, total_count.total_count_per_day
-        AS Total,
-        total_count_failed.total_count_per_day AS Failed
+        AS Total, total_count_failed.total_count_per_day AS Failed
         FROM total_count INNER JOIN total_count_failed
         ON total_count.date = total_count_failed.date
         WHERE (total_count_failed.total_count_per_day*100)/
@@ -66,11 +65,11 @@ def requesrt_errors():
     """)
     authors = curr.fetchall()
     print("On which days did more than 1% of requests lead to errors?")
-    print(authors[0])
+    # print(authors[0])
     for r in authors:
         print(
-            r[0] + '--' + "{:4.3}".format(str(percentage(r[2], r[1]))) +
-            " % errors")
+            r[0] + '--' + "{:4.4}".format(str(percentage(r[2], r[1]))) +
+            "% errors")
     db.close
     # {:10.4f} format float
 
