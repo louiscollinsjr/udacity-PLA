@@ -73,7 +73,7 @@ def requesrt_errors():
             r[0] + '--' + "{:4.4}".format(str(percentage(r[2], r[1]))) +
             "% errors")
     db.close
-    # {:10.4f} format float
+
 
 popular_articles()
 print("\n")
